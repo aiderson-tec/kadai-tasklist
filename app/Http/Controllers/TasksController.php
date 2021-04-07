@@ -44,9 +44,12 @@ class TasksController extends Controller
     {
         $request->validate([
             'content' => 'required|max:255',
+            'status' => 'required|max:10',
         ]);
+        
         $task = new Task;
         $task->content = $request->content;
+        $task->status = $request->status;
         $task->save();
 
         return redirect('/');
@@ -74,11 +77,7 @@ class TasksController extends Controller
      */
     public function edit($id)
     {
-        $request->validate([
-            'content' => 'required|max:255',
-        ]);
         $task = Task::findOrFail($id);
-
         return view('tasks.edit', [
             'task' => $task,
         ]);
@@ -93,8 +92,14 @@ class TasksController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $request->validate([
+            'content' => 'required|max:255',
+            'status' => 'required|max:10',
+        ]);
+        
         $task = Task::findOrFail($id);
         $task->content = $request->content;
+        $task->status = $request->status;
         $task->save();
 
         // トップページへリダイレクトさせる
