@@ -71,10 +71,8 @@ class TasksController extends Controller
      */
     public function edit($id)
     {
-        // idの値でメッセージを検索して取得
         $task = Task::findOrFail($id);
 
-        // メッセージ編集ビューでそれを表示
         return view('tasks.edit', [
             'task' => $task,
         ]);
@@ -90,8 +88,7 @@ class TasksController extends Controller
     public function update(Request $request, $id)
     {
         $task = Task::findOrFail($id);
-        // メッセージを更新
-        $task->content = $task->content;
+        $task->content = $request->content;
         $task->save();
 
         // トップページへリダイレクトさせる
@@ -107,7 +104,6 @@ class TasksController extends Controller
     public function destroy($id)
     {
         $task = Task::findOrFail($id);
-        // メッセージを削除
         $task->delete();
 
         // トップページへリダイレクトさせる
